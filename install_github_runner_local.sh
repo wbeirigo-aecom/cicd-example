@@ -19,14 +19,15 @@ sudo -u "${RUNNER_USER}" mkdir -p "${RUNNER_DIR}"
 
 echo "==> [2/7] Dependências"
 sudo apt-get update -y
-sudo apt-get install -y curl ca-certificates
+sudo apt-get install -y curl ca-certificates jq
 
 echo "==> [3/7] Baixando runner (último release)"
 cd "${RUNNER_DIR}"
-sudo -u "${RUNNER_USER}" bash -lc '
-  curl -fsSL -o actions-runner-linux-x64.tar.gz     https://github.com/actions/runner/releases/latest/download/actions-runner-linux-x64.tar.gz
+LATEST_VERSION=$(curl -s https://api.github.com/repos/actions/runner/releases/latest | jq -r .tag_name | sed 's/^v//')
+sudo -u "${RUNNER_USER}" bash -lc "
+  curl -fsSL -o actions-runner-linux-x64.tar.gz     https://github.com/actions/runner/releases/download/v${LATEST_VERSION}/actions-runner-linux-x64-${LATEST_VERSION}.tar.gz
   tar xzf actions-runner-linux-x64.tar.gz
-'
+"
 
 echo "==> [4/7] Capturando URL e Token de registro"
 read -rp "GITHUB_URL (ex.: https://github.com/<org>/<repo> ou https://github.com/<org>): " GITHUB_URL
