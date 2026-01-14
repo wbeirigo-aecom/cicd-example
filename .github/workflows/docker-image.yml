@@ -11,7 +11,7 @@ jobs:
   build:
 
 
-    runs-on: [ runner-local, self-hosted, Linux, X64, ubuntu, local, ci]
+    runs-on: [ runner-local]
 
     steps:
     - uses: actions/checkout@v4
