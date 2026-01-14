@@ -13,11 +13,10 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      - name: Show runner context
-        run: |
-          echo "Runner name: $RUNNER_NAME"
-          echo "Runner OS: $RUNNER_OS"
-          echo "Labels: $RUNNER_LABELS"
+    - uses: actions/checkout@v4
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+
 
 
 
