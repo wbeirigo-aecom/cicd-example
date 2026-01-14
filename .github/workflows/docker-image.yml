@@ -13,6 +13,12 @@ jobs:
     runs-on: [self-hosted, runner-local]
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      - name: Show runner context
+        run: |
+          echo "Runner name: $RUNNER_NAME"
+          echo "Runner OS: $RUNNER_OS"
+          echo "Labels: $RUNNER_LABELS"
+
+
+
+
